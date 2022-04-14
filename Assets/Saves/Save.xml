@@ -1,0 +1,26 @@
+<Data>
+  <XPos value="-1,571341" />
+  <YPos value="1,080001" />
+  <ZPos value="3,811749" />
+  <XRot value="0" />
+  <YRot value="0,9882557" />
+  <ZRot value="0" />
+  <WRot value="-0,1528089" />
+  <Energy value="0" />
+  <Health value="100" />
+  <MovementSpeed value="8" />
+  <JumpSpeed value="8" />
+  <LevelVariants>
+    <IntValue value="2" />
+    <IntValue value="1" />
+    <IntValue value="2" />
+    <IntValue value="1" />
+  </LevelVariants>
+  <Activated>
+    <BoolValue value="True" />
+    <BoolValue value="True" />
+    <BoolValue value="True" />
+    <BoolValue value="True" />
+  </Activated>
+  <ActiveLevel value="3" />
+</Data>
