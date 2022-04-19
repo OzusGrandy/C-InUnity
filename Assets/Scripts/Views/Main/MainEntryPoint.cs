@@ -17,17 +17,6 @@ namespace StudyGame
         {
             mainController.Updates();
         }
-
-        public void StartSomeCoroutine(IEnumerator coroutine)
-        {
-            StartCoroutine(coroutine);
-        }
-        public void StopSomeCoroutine(IEnumerator coroutine)
-        {
-            StopCoroutine(coroutine);
-        }
-
-
     }
 }
 
