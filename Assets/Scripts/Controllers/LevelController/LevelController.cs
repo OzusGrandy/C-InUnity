@@ -73,6 +73,7 @@ namespace StudyGame
             }
             levels[levels.Count - 1].LevelView.EnterPortalView.GetActivate += LoadLevel;
             levels[levels.Count - 1].LevelView.ExitPortalView.GetActivate += LoadLevel;
+            levels[levels.Count - 1].LevelView.NavMeshSurface.BuildNavMesh();
             GetShowKey.Invoke(true);
             if (levels.Count - 1 != 0)
             {
@@ -116,6 +117,7 @@ namespace StudyGame
             }
             levels[levels.Count - 1].LevelView.EnterPortalView.GetActivate += LoadLevel;
             levels[levels.Count - 1].LevelView.ExitPortalView.GetActivate += LoadLevel;
+            levels[levels.Count - 1].LevelView.NavMeshSurface.BuildNavMesh();
             if (!activated)
             {
                 GetShowKey.Invoke(true);
@@ -137,6 +139,7 @@ namespace StudyGame
                     AddLevel();
                     activeLevel++;
                     levels[activeLevel - 1].Level.SetActive(false);
+                    levels[activeLevel - 1].LevelView.NavMeshSurface.RemoveData();
                     levels[activeLevel - 1].LevelView.ExitPortalView.Action();
                     currentTeleportationPoint = levels[activeLevel].LevelView.EnterPortalExitPoint;
                     GetTeleportation.Invoke();
@@ -145,6 +148,7 @@ namespace StudyGame
                 {
                     activeLevel++;
                     levels[activeLevel - 1].Level.SetActive(false);
+                    levels[activeLevel - 1].LevelView.NavMeshSurface.RemoveData();
                     levels[activeLevel - 1].LevelView.ExitPortalView.Action();
                     levels[activeLevel].Level.SetActive(true);
                     currentTeleportationPoint = levels[activeLevel].LevelView.EnterPortalExitPoint;
@@ -162,6 +166,7 @@ namespace StudyGame
                 {
                     activeLevel--;
                     levels[activeLevel + 1].Level.SetActive(false);
+                    levels[activeLevel + 1].LevelView.NavMeshSurface.RemoveData();
                     levels[activeLevel + 1].LevelView.EnterPortalView.Action();
                     levels[activeLevel].Level.SetActive(true);
                     currentTeleportationPoint = levels[activeLevel].LevelView.ExitPortalExitPoint;
@@ -220,8 +225,10 @@ namespace StudyGame
             {
                 AddLoadedLevel(data[i].LevelVariant, data[i].Activated);
                 levels[levels.Count - 1].Level.SetActive(false);
+                levels[levels.Count - 1].LevelView.NavMeshSurface.RemoveData();
             }
             levels[activeLevel].Level.SetActive(true);
+            levels[activeLevel].LevelView.NavMeshSurface.BuildNavMesh();
 
         }
     }
