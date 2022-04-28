@@ -7,7 +7,7 @@ namespace StudyGame
         private LevelController levelController;
         private InteractiveObjectsController interactiveObjectsController;
         private GameObject player;
-        private PlayerController playerController;
+        private Player playerController;
         private UnitController unitController;
         private DataController dataController;
         private MainEntryPoint mainView;
@@ -19,7 +19,7 @@ namespace StudyGame
             unitController = new UnitController();
             levelController = new LevelController();
             interactiveObjectsController = new InteractiveObjectsController();
-            playerController = new PlayerController();
+            playerController = new Player();
             dataController = new DataController();
             UI = new UIController();
             interactiveObjectsController.StartController();
@@ -33,29 +33,30 @@ namespace StudyGame
             UI.StartController();
             levelController.StartController();
             unitController.StartController();
-            playerController.StartController();
-            UI.SetHealth = playerController.GetHealth.ToString();
-            UI.SetEnergy = playerController.GetEnergy.ToString();
-            UI.SetMovementSpeed = playerController.GetMovementSpeed.ToString();
-            UI.SetJumpSpeed = playerController.GetJumpSpeed.ToString();
+            UI.SetHealth = playerController.Health.ToString();
+            UI.SetEnergy = playerController.Energy.ToString();
+            UI.SetMovementSpeed = playerController.MovementSpeed.ToString();
+            UI.SetJumpSpeed = playerController.JumpSpeed.ToString();
             interactiveObjectsController.ReloadObjects();
             player = GameObject.Find("Player(Clone)");
             dataController.StartController();
 
         }
 
-        private void Teleportation()
-        {
-            playerController.Teleportation(levelController.CurrentTeleportationPoint);
-        }
+
 
         public void Updates()
         {
-            playerController.UpdateViev();
+            unitController.UpdatePlayer();
             interactiveObjectsController.UpdateObjects();
             UI.UpdateMiniMap(player.transform.position);
             if (Input.GetKeyDown(KeyCode.Escape))
                 UI.Pause();
+        }
+
+        private void Teleportation()
+        {
+            unitController.PlayerTeleportation(levelController.CurrentTeleportationPoint);
         }
 
         private void Save()
@@ -66,10 +67,10 @@ namespace StudyGame
         private void Load()
         {
             SaveStructure temp = dataController.Load();
-            playerController.SwitchPlayerActive();
+            unitController.SwitchPlayerActive();
             levelController.SetLoadedData(temp.Levels, temp.ActiveLevel);
-            playerController.SetLoadedData(temp.Player);
-            playerController.SwitchPlayerActive();
+            unitController.SetLoadedData(temp.Player);
+            unitController.SwitchPlayerActive();
         }
 
         private void LevelActivator()

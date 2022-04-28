@@ -3,7 +3,7 @@ namespace StudyGame
     public interface IAttack
 
     {
-        void Attack();
+        public void Attack();
     }
 }
 

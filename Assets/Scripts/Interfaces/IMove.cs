@@ -1,4 +1,8 @@
-public interface IMove 
+namespace StudyGame
 {
-    void Move();
+    public interface IMove
+    {
+        public void Move();
+    }
 }
+
