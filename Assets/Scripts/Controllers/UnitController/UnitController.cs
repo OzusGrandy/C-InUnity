@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace StudyGame
@@ -5,7 +6,6 @@ namespace StudyGame
     public sealed class UnitController : Controller
     {
         public Vector3 spawnPlayer;
-
         private Player player;
         private GameObject playerObject;
         private PlayerView playerView;
@@ -20,22 +20,26 @@ namespace StudyGame
         private float minYAngle;
         private float sensitivityMouse;
 
+        private EnemyPools enemyPools;
+        private EnemyFabrick enemyFabrick;
+        private List<EnemyStruct> enemies;
+
+        public Player Player { get { return player; } }
+
         public override void StartController()
         {
             player = new Player();
             spawnPlayer = new Vector3(0f, 2f, 0f);
             playerObject = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Player/Player"), spawnPlayer, Quaternion.identity);
+            Object.Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/EnemyStorage"));
+            enemyPools = new EnemyPools();
+            enemyFabrick = new EnemyFabrick();
+            enemies = new List<EnemyStruct>();
+            enemyPools.CreateEnemyPools();
             playerView = playerObject.GetComponent<PlayerView>();
             characterController = playerView.CharacterController;
             camera = playerView.Camera;
-            player.MovementSpeed = 8.0f;
-            player.JumpSpeed = 8.0f;
-            player.Health = 100.0f;
-
-            maxYAngle = 90.0f;
-            minYAngle = -90.0f;
-            sensitivityMouse = 200.0f;
-
+            SetStartParameters();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             characterTargetRotation = playerView.PlayerTransform.localRotation;
@@ -88,6 +92,18 @@ namespace StudyGame
             playerView.PlayerTransform.localRotation = characterTargetRotation;
 
             camera.transform.localRotation = cameraTargetRotation;
+        }
+
+        private void SetStartParameters()
+        {
+            player.MovementSpeed = 8.0f;
+            player.JumpSpeed = 8.0f;
+            player.Health = 100.0f;
+            player.Energy = 50.0f;
+
+            maxYAngle = 90.0f;
+            minYAngle = -90.0f;
+            sensitivityMouse = 200.0f;
         }
     }
 }

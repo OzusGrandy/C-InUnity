@@ -7,7 +7,7 @@ namespace StudyGame
         private LevelController levelController;
         private InteractiveObjectsController interactiveObjectsController;
         private GameObject player;
-        private Player playerController;
+        private Player playerScript;
         private UnitController unitController;
         private DataController dataController;
         private MainEntryPoint mainView;
@@ -19,7 +19,6 @@ namespace StudyGame
             unitController = new UnitController();
             levelController = new LevelController();
             interactiveObjectsController = new InteractiveObjectsController();
-            playerController = new Player();
             dataController = new DataController();
             UI = new UIController();
             interactiveObjectsController.StartController();
@@ -33,14 +32,11 @@ namespace StudyGame
             UI.StartController();
             levelController.StartController();
             unitController.StartController();
-            UI.SetHealth = playerController.Health.ToString();
-            UI.SetEnergy = playerController.Energy.ToString();
-            UI.SetMovementSpeed = playerController.MovementSpeed.ToString();
-            UI.SetJumpSpeed = playerController.JumpSpeed.ToString();
+            playerScript = unitController.Player;
             interactiveObjectsController.ReloadObjects();
             player = GameObject.Find("Player(Clone)");
             dataController.StartController();
-
+            UI.SetStartTextParameters(playerScript.Health, playerScript.Energy, playerScript.MovementSpeed, playerScript.JumpSpeed);
         }
 
 
@@ -61,7 +57,7 @@ namespace StudyGame
 
         private void Save()
         {
-            dataController.Save(levelController.GetInfo(), playerController.GetInfo(), levelController.ActiveLevel);
+            dataController.Save(levelController.GetInfo(), playerScript.GetInfo(), levelController.ActiveLevel);
         }
 
         private void Load()

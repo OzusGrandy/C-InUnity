@@ -72,6 +72,14 @@ namespace StudyGame
             enterPortalIcon.transform.position = new Vector3(enterPosition.x, exitPortalIcon.transform.position.y, enterPosition.z);
         }
 
+        public void SetStartTextParameters(float health, float energy, float movementSpeed, float jumpSpeed)
+        {
+            SetHealth = health.ToString();
+            SetEnergy = energy.ToString();
+            SetMovementSpeed = movementSpeed.ToString();
+            SetJumpSpeed = jumpSpeed.ToString();
+        }
+
         public void Pause()
         {
             pause = !pause;
