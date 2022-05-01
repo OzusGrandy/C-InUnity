@@ -45,6 +45,14 @@ namespace StudyGame
         //{
         //    energyStorageRate = 100.0f;
         //}
+
+        public UnitStructure (float energy, float health, float movementSpeed, float jumpSpeed) : this()
+        {
+            this.energy = energy;
+            this.health = health;
+            this.movementSpeed = movementSpeed;
+            this.jumpSpeed = jumpSpeed;
+        }
     }
 }
 

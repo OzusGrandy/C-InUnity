@@ -13,5 +13,13 @@ namespace StudyGame
         public UnitStructure EnemyStats { get { return enemyStats; } set { enemyStats = value; } }
         public GameObject EnemyObject { get { return enemyObject; } set { enemyObject = value; } }
         public EnemyView EnemyView { get { return enemyView; } set { enemyView = value; } }
+
+        public EnemyStruct(UnitStructure enemyStats, GameObject enemyObject, EnemyView enemyView) : this()
+        {
+            EnemyStats = enemyStats;
+            EnemyObject = enemyObject;
+            EnemyView = enemyView;
+        }
+
     }
 }
