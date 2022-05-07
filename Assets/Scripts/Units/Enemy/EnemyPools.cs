@@ -28,9 +28,13 @@ namespace StudyGame
             for (int i =0; i < redEnemies.Length; i++)
             {
                 redEnemyPool.Add(redEnemies[i]);
+                redEnemies[i].SetActive(false);
                 blueEnemyPool.Add(blueEnemies[i]);
+                blueEnemies[i].SetActive(false);
                 greenEnemyPool.Add(greenEnemies[i]);
+                greenEnemies[i].SetActive(false);
                 yellowEnemyPool.Add(yellowEnemies[i]);
+                yellowEnemies[i].SetActive(false);
             }
         }
 
@@ -50,10 +54,14 @@ namespace StudyGame
                 case EnemyPool.green:
                     temp = greenEnemyPool[greenEnemyPool.Count - 1];
                     greenEnemyPool.RemoveAt(greenEnemyPool.Count - 1);
-                    break;                
-                default:
+                    break;
+                case EnemyPool.yellow:
                     temp = yellowEnemyPool[yellowEnemyPool.Count - 1];
                     yellowEnemyPool.RemoveAt(yellowEnemyPool.Count - 1);
+                    break;
+                default:
+                    temp = redEnemyPool[redEnemyPool.Count - 1];
+                    redEnemyPool.RemoveAt(redEnemyPool.Count - 1);
                     break;
             }
             return temp;

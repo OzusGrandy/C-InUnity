@@ -20,10 +20,10 @@ namespace StudyGame
         private int largeEnemyJumpSpeed = 16;
 
 
-        public EnemyStruct CreateEnemy(EnemyPool typeOfEnemy, EnemyPools pools, bool random)
+        public EnemyStruct CreateEnemy(EnemyPool typeOfEnemy, EnemyPools pools, bool randomStats)
         {
             EnemyStruct temp = new EnemyStruct();
-            if (random)
+            if (randomStats)
             {
                 temp.EnemyStats = RandomEnemyStats();
             }
@@ -35,6 +35,7 @@ namespace StudyGame
             temp.EnemyView = temp.EnemyObject.AddComponent<EnemyView>();
             temp.EnemyView.NavigationAgent = temp.EnemyObject.AddComponent<NavMeshAgent>();
             temp.EnemyView.SetEnemyTransform = temp.EnemyObject.transform;
+            temp.EnemyPool = typeOfEnemy;
             return temp;
         }
 
@@ -56,7 +57,8 @@ namespace StudyGame
                 case EnemyPool.red: temp = new UnitStructure(mediumEnemyEnergy,mediumEnemyHealth,mediumEnemySpeed,mediumEnemyJumpSpeed); break;
                 case EnemyPool.blue: temp = new UnitStructure(mediumEnemyEnergy, mediumEnemyHealth, mediumEnemySpeed, mediumEnemyJumpSpeed); break;
                 case EnemyPool.green: temp = new UnitStructure(smallEnemyEnergy, smallEnemyHealth, largeEnemySpeed, largeEnemyJumpSpeed); break;
-                default: temp = new UnitStructure(largeEnemyEnergy, largeEnemyHealth, smallEnemySpeed, smallEnemyJumpSpeed); break;
+                case EnemyPool.yellow: temp = new UnitStructure(largeEnemyEnergy, largeEnemyHealth, smallEnemySpeed, smallEnemyJumpSpeed); break;
+                default: temp = new UnitStructure(mediumEnemyEnergy, mediumEnemyHealth, mediumEnemySpeed, mediumEnemyJumpSpeed); break;
             }
             return temp;
         }

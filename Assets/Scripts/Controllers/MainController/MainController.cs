@@ -26,12 +26,13 @@ namespace StudyGame
             levelController.GetShowKey += ShowKey;
             levelController.GetTeleportation += Teleportation;
             levelController.GetShowPortalIcons += ShowPortalIcons;
+            levelController.GetAddEnemies += AddEnemies;
             UI.GetSave += Save;
             UI.GetLoad += Load;
             dataController.CreateAutoSave += Save;
             UI.StartController();
-            levelController.StartController();
             unitController.StartController();
+            levelController.StartController();
             playerScript = unitController.Player;
             interactiveObjectsController.ReloadObjects();
             player = GameObject.Find("Player(Clone)");
@@ -73,6 +74,7 @@ namespace StudyGame
         {
             levelController.SetActivated();
             UI.UpdateKeyIcon(false, interactiveObjectsController.KeyPosition);
+            unitController.RemoveEnemies();
         }
         
         private void ShowKey(bool show)
@@ -84,6 +86,11 @@ namespace StudyGame
         private void ShowPortalIcons(bool showEnter, bool showExit, Transform exit, Transform enter)
         {
             UI.UpdatePortalIcons(showEnter, showExit, new Vector3(enter.position.x, enter.position.y, enter.position.z), new Vector3(exit.position.x, exit.position.y, exit.position.z));
+        }
+
+        private void AddEnemies(Transform[] spawnPoints)
+        {
+            unitController.AddEnemies(spawnPoints);
         }
     }
 }

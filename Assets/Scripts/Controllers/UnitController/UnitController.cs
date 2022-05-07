@@ -105,6 +105,38 @@ namespace StudyGame
             minYAngle = -90.0f;
             sensitivityMouse = 200.0f;
         }
+
+        public void AddEnemies(Transform[] spawnPoints)
+        {
+            System.Random random = new System.Random();
+            int tempTypeNumber = 0;
+            EnemyPool tempEnemyType = EnemyPool.red;
+            for (int i = 0; i < spawnPoints.Length; i++)
+            {
+                tempTypeNumber = random.Next(0,4);
+                switch (tempTypeNumber)
+                {
+                    case 0: tempEnemyType = EnemyPool.red; break;
+                    case 1: tempEnemyType = EnemyPool.blue; break;
+                    case 2: tempEnemyType = EnemyPool.green; break;
+                    case 3: tempEnemyType = EnemyPool.yellow; break;
+                    default: tempEnemyType = EnemyPool.red; break;
+                }
+                enemies.Add(enemyFabrick.CreateEnemy(tempEnemyType, enemyPools, false));
+                enemies[enemies.Count - 1].EnemyObject.transform.position = spawnPoints[i].position;
+                enemies[enemies.Count - 1].EnemyObject.SetActive(true);
+            }
+        }
+        
+        public void RemoveEnemies()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemyPools.ReturnEnemyAtPool(enemies[i].EnemyPool, enemies[i].EnemyObject);
+                enemies[i].EnemyObject.SetActive(false);
+            }
+            enemies.Clear();
+        }
     }
 }
 

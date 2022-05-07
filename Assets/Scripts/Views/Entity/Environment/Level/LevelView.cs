@@ -14,7 +14,7 @@ namespace StudyGame
         [SerializeField] private PortalView enterPortalView;
         [SerializeField] private PortalView exitPortalView;
         [SerializeField] private NavMeshSurface navMeshSurface;
-        [SerializeField] private Transform[] spawnpoints;
+        [SerializeField] private Transform[] spawnPoints;
 
         public GameObject EnterPortal { get { return enterPortal; } }
         public GameObject ExitPortal { get { return exitPortal; } }
@@ -23,7 +23,7 @@ namespace StudyGame
         public PortalView EnterPortalView { get { return enterPortalView; } }
         public PortalView ExitPortalView { get { return exitPortalView; } }
         public NavMeshSurface NavMeshSurface { get { return navMeshSurface; } }
-        public Transform[] Spawnpoints { get { return spawnpoints; } }
+        public Transform[] SpawnPoints { get { return spawnPoints; } }
     }
 }
 

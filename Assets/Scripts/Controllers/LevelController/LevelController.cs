@@ -25,6 +25,9 @@ namespace StudyGame
         public delegate void ShowPortalIcons(bool showEnter, bool showExit, Transform enter, Transform exit);
         public event ShowPortalIcons GetShowPortalIcons;
 
+        public delegate void AddEnemies(Transform[] spawnPoints);
+        public event AddEnemies GetAddEnemies;
+
         public Transform CurrentTeleportationPoint { get { return currentTeleportationPoint; } }
         public Transform CurrentEnterPortal { get { return currentEnterPortal; } }
         public Transform CurrentExitPortal { get { return currentExitPortal; } }
@@ -74,6 +77,7 @@ namespace StudyGame
             levels[levels.Count - 1].LevelView.EnterPortalView.GetActivate += LoadLevel;
             levels[levels.Count - 1].LevelView.ExitPortalView.GetActivate += LoadLevel;
             levels[levels.Count - 1].LevelView.NavMeshSurface.BuildNavMesh();
+            GetAddEnemies.Invoke(levels[levels.Count - 1].LevelView.SpawnPoints);
             GetShowKey.Invoke(true);
             if (levels.Count - 1 != 0)
             {

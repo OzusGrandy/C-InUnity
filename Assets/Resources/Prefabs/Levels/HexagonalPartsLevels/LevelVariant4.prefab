@@ -18093,7 +18093,7 @@ MonoBehaviour:
   enterPortalView: {fileID: 8080842596439212541}
   exitPortalView: {fileID: 8363311517611412205}
   navMeshSurface: {fileID: 4319136076475426274}
-  spawnpoints:
+  spawnPoints:
   - {fileID: 3794295379264942919}
   - {fileID: 6371221333566768202}
   - {fileID: 6064510146638596846}
