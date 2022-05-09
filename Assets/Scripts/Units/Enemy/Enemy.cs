@@ -1,15 +1,10 @@
+using UnityEngine;
+using UnityEngine.AI;
+
 namespace StudyGame
 {
-    public class Enemy : Unit
+    public abstract class Enemy : Unit
     {
-        public override void Attack()
-        {
-            
-        }
-        public override void Move()
-        {
-            
-        }
+        public abstract void StartEnemy(float stoppingDistance, Transform player, Transform enemy, NavMeshAgent agent, float speed);
     }
 }
-

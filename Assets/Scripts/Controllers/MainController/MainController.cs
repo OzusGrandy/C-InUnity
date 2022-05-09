@@ -44,7 +44,7 @@ namespace StudyGame
 
         public void Updates()
         {
-            unitController.UpdatePlayer();
+            unitController.UpdateUnits();
             interactiveObjectsController.UpdateObjects();
             UI.UpdateMiniMap(player.transform.position);
             if (Input.GetKeyDown(KeyCode.Escape))

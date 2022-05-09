@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace StudyGame
 {
@@ -19,16 +20,21 @@ namespace StudyGame
         private float maxYAngle;
         private float minYAngle;
         private float sensitivityMouse;
+        private float enemyMeeleStoppingDistance;
+        private float enemyRangeStoppingDistance;
 
         private EnemyPools enemyPools;
         private EnemyFabrick enemyFabrick;
         private List<EnemyStruct> enemies;
+        private List<Unit> unitScripts;
 
         public Player Player { get { return player; } }
 
         public override void StartController()
         {
+            unitScripts = new List<Unit>();
             player = new Player();
+            unitScripts.Add(player);
             spawnPlayer = new Vector3(0f, 2f, 0f);
             playerObject = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Player/Player"), spawnPlayer, Quaternion.identity);
             Object.Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/EnemyStorage"));
@@ -50,13 +56,26 @@ namespace StudyGame
             }
             player.CharacterController = playerView.CharacterController;
             player.PlayerView = playerView;
+            enemyMeeleStoppingDistance = 2.5f;
+            enemyRangeStoppingDistance = 50.0f;
         }
 
-        public void UpdatePlayer()
+        public void UpdateUnits()
         {
             UpdatePlayerRotation();
-            if (characterController.enabled)
-                player.Move();
+            for (int i = 0; i < unitScripts.Count; i++)
+            {
+                if (i == 0)
+                {
+                    if (characterController.enabled)
+                        unitScripts[i].Move();
+                }
+                else
+                {
+                    unitScripts[i].Move();
+                }
+            }
+
         }
 
         public void SwitchPlayerActive()
@@ -110,6 +129,7 @@ namespace StudyGame
         {
             System.Random random = new System.Random();
             int tempTypeNumber = 0;
+            int tempAttackType = 0;
             EnemyPool tempEnemyType = EnemyPool.red;
             for (int i = 0; i < spawnPoints.Length; i++)
             {
@@ -122,8 +142,19 @@ namespace StudyGame
                     case 3: tempEnemyType = EnemyPool.yellow; break;
                     default: tempEnemyType = EnemyPool.red; break;
                 }
-                enemies.Add(enemyFabrick.CreateEnemy(tempEnemyType, enemyPools, false));
+                tempAttackType = random.Next(0, 2);
+                if (tempAttackType == 0)
+                {
+                    enemies.Add(enemyFabrick.CreateEnemy(tempEnemyType, enemyPools, false, true));
+                    enemies[enemies.Count - 1].EnemyScript.StartEnemy(enemyMeeleStoppingDistance, playerObject.transform, enemies[enemies.Count - 1].EnemyObject.transform, enemies[enemies.Count - 1].EnemyView.NavigationAgent, enemies[enemies.Count - 1].EnemyStats.MovementSpeed);
+                }
+                else
+                {
+                    enemies.Add(enemyFabrick.CreateEnemy(tempEnemyType, enemyPools, false, false));
+                    enemies[enemies.Count - 1].EnemyScript.StartEnemy(enemyRangeStoppingDistance, playerObject.transform, enemies[enemies.Count - 1].EnemyObject.transform, enemies[enemies.Count - 1].EnemyView.NavigationAgent, enemies[enemies.Count - 1].EnemyStats.MovementSpeed);
+                }
                 enemies[enemies.Count - 1].EnemyObject.transform.position = spawnPoints[i].position;
+                unitScripts.Add(enemies[enemies.Count - 1].EnemyScript);
                 enemies[enemies.Count - 1].EnemyObject.SetActive(true);
             }
         }
@@ -134,7 +165,10 @@ namespace StudyGame
             {
                 enemyPools.ReturnEnemyAtPool(enemies[i].EnemyPool, enemies[i].EnemyObject);
                 enemies[i].EnemyObject.SetActive(false);
+                Object.Destroy(enemies[i].EnemyObject.GetComponent<NavMeshAgent>());
+                Object.Destroy(enemies[i].EnemyObject.GetComponent<EnemyView>());
             }
+            unitScripts.RemoveRange(1, unitScripts.Count - 1);
             enemies.Clear();
         }
     }

@@ -20,7 +20,7 @@ namespace StudyGame
         private int largeEnemyJumpSpeed = 16;
 
 
-        public EnemyStruct CreateEnemy(EnemyPool typeOfEnemy, EnemyPools pools, bool randomStats)
+        public EnemyStruct CreateEnemy(EnemyPool typeOfEnemy, EnemyPools pools, bool randomStats, bool isMeele)
         {
             EnemyStruct temp = new EnemyStruct();
             if (randomStats)
@@ -36,6 +36,10 @@ namespace StudyGame
             temp.EnemyView.NavigationAgent = temp.EnemyObject.AddComponent<NavMeshAgent>();
             temp.EnemyView.SetEnemyTransform = temp.EnemyObject.transform;
             temp.EnemyPool = typeOfEnemy;
+            if (isMeele)
+                temp.EnemyScript = new MeeleEnemy();
+            else
+                temp.EnemyScript = new RangeEnemy();
             return temp;
         }
 
